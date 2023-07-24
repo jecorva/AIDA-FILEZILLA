@@ -1,0 +1,344 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap');
+
+/***********************************************************************************
+---------------------------------------------------------------------------[ FONTS ]
+************************************************************************************/
+
+.opensans {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 500 !important;
+}
+.sourcesans {
+    font-family: "Source Sans Pro", sans-serif !important;
+    font-weight: 600 !important;
+}
+.sourcesansrg {
+    font-family: "Source Sans Pro", sans-serif !important;
+    font-weight: 500 !important;
+}
+.text-input {
+    /*font-family: 'Thasadith', sans-serif;*/
+    font-family: "Varela Round", sans-serif !important;
+    font-weight: 500 !important;
+}
+.montserrat {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+}
+.RobotoC {
+    font-family: 'Roboto Condensed', sans-serif !important;
+}
+
+.fw-600 {
+    font-weight: 600 !important;
+}
+
+.fw-500 {
+    font-weight: 500 !important;
+}
+
+.fs-10 {
+    font-size: 10px;
+}
+.fs-11 {
+    font-size: 11px;
+}
+.fs-12 {
+    font-size: 12px !important;
+}
+.fs-13 {
+    font-size: 13px;
+}
+.fs-14 {
+    font-size: 14px !important;
+}
+.fs-15 {
+    font-size: 15px;
+}
+.fs-16 {
+    font-size: 16px !important;
+}
+/**** Tooltip JeCorVa ****/
+.tooltip-jcv {
+    position: relative;
+}
+.tooltip-jcv:hover .tooltip-box-jcv {
+    display: inline-block;
+}
+.tooltip-box-jcv {
+    display: none;
+    position: absolute;
+    background: rgba(0,0,0,0.8) !important;
+    line-height: 20px;
+    z-index: 500;
+    text-align: center;
+    color: #fff;
+    font-size: 11px !important;
+    padding: 3px 10px;    
+    border-radius: 5px;
+    left: -20px;
+    right: -20px;
+    bottom: 25px; /* Distancia del triangulo*/
+}
+.tooltip-box-jcv::after {
+    content: "";
+    display: block;
+    border-top: 7px solid black;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    position: absolute;
+    bottom: -7px;
+    left: calc(50% - 7px);
+}
+
+/**** Tooltip JeAlCo ****/
+.tooltip-jac {
+    position: relative;
+}
+.tooltip-jac:hover .tooltip-box-jac {
+    display: inline-block;
+}
+.tooltip-box-jac {
+    display: none;
+    position: absolute;
+    background: rgba(0,0,0,0.7) !important;
+    line-height: 20px;
+    z-index: 500;
+    text-align: center;
+    color: #fff;
+    font-size: 13px;
+    padding: 5px 8px;
+    border-radius: 4px;
+    left: -20px;
+    right: -20px;
+    bottom: 35px; /* Distancia del triangulo*/
+}
+.tooltip-box-jac::after {
+    content: "";
+    display: block;
+    border-top: 7px solid rgba(0,0,0,0.7);
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    position: absolute;
+    bottom: -6px;
+    left: calc(50% - 7px);
+}
+
+.custom-file-input ~ .custom-file-label::after {
+    content: "Buscar";
+}
+
+/***********************************************************************************
+-----------------------------------------------------------------------[ LOGIN CSS ]
+************************************************************************************/
+
+.border-letter {
+    text-shadow: 1px 1px 1px rgb(53, 53, 53);
+}
+.btn-elevacion {
+    box-shadow: 1px 1px 2px gray;
+}
+.card-elevacion {
+    box-shadow: 1px 1px 1px #d9d9d9;
+}
+.bg-login {
+    background-image: url(../img/img_login.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.body {
+    background-color: #e6e6e6;
+    justify-content: center;
+    align-items: center;
+    font-family: "Krub", sans-serif;
+    font-weight: 500 !important;
+}
+
+.body-login {
+    background: #d9d9d9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader {
+    background: transparent url("../img/preloader-3.gif") no-repeat scroll center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    border-style: none;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    z-index: 10000;
+  }
+
+
+
+
+.alert-success {
+    background-color: #67ba5b;
+}
+
+.btn-amber {
+    background: linear-gradient(180deg, gold, goldenrod);
+}
+
+.btn-amber:hover {
+    background: linear-gradient(180deg, goldenrod, gold) !important;
+    color: black !important;
+}
+/*.content-wrapper {
+    background: linear-gradient(180deg, #bceeff, #edfffa) !important;
+}*/
+
+.table td {
+    padding: 0.4rem !important;
+}
+
+.table th {
+    padding: 0.3rem !important;
+    /* vertical-align: top;
+    border-top: 1px solid black;    */
+}
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 1px solid gray !important;
+}
+.border-radius {
+    border-radius: 2px;
+}
+
+.border-1 {
+    --bs-border-width: 1px;
+}
+
+.border-2 {
+    --bs-border-width: 2px;
+}
+
+.border-3 {
+    --bs-border-width: 3px;
+    border-width:3px !important;
+}
+
+.border-4 {
+    --bs-border-width: 4px !important;
+}
+
+.border-5 {
+    --bs-border-width: 5px !important;
+}
+
+.select2-container--default .select2-selection--single {
+    /**border: 1px solid #ced4da !important;*/
+    /*height: calc(2.25rem + 2px) !important;*/
+    height: calc(2.25rem) !important;
+    width: 100% !important;
+    border-radius: 4px;
+}
+.select2-container--default
+    .select2-selection--single
+    .select2-selection__arrow {
+    top: 3px !important;
+}
+.select2-container {
+    display: block !important;
+}
+@media (min-width: 600px) {
+    .seccion {
+        width: 70% !important;
+    }
+}
+@media (min-width: 1300px) {
+    .seccion {
+        width: 50% !important;
+    }
+}
+@media (max-width: 600px) {
+    .seccion {
+        width: 100% !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+    .body {
+        background-color: white;
+    }
+}
+.sidebar-left {
+    background-color: #283046 !important;
+}
+.btn-bluedark {
+    background-color: #283046 !important;
+}
+.btn-bluedark:hover {
+    background-color: #0c102a !important;
+}
+
+.bg-bluedark {
+    background-color: #283046 !important;
+}
+
+label {
+    font-family: "Source Sans Pro", sans-serif !important;
+    font-weight: 500 !important;
+}
+input {
+    font-family: "Source Sans Pro", sans-serif !important;
+    font-weight: 500 !important;
+    color: #4e4e4e !important;
+    padding-bottom: 1px !important;
+    padding-top: 1px !important;
+}
+.form-group label,
+input {
+    font-size: 14px !important;
+}
+.form-control {
+    height: calc(2.25rem) !important;
+}
+.toast-title {
+    font-family: "Source Sans Pro", sans-serif !important;
+    font-size: 14px !important;
+}
+.toast-message {
+    /*font-family: "Open Sans", sans-serif !important;*/
+    font-family: "Source Sans Pro", sans-serif;
+    font-weight: 500 !important;
+}
+.toast-warning {
+    color: black !important;
+    text-align: center;
+}
+
+.bg-body {
+    background-color: #efefef !important;
+}
+
+.bg-hover:hover {
+    background-color: #e6e6e6;
+}
+
+.table-bluedark {
+    background-color: #283046 !important;
+    color: white;
+}
+
+.w3-code {
+    border-left: 4px solid #04AA6D;
+    color: #04AA6D;
+}
+.rounded-right-jac {
+    border-top-right-radius: 0.10rem!important;
+    border-bottom-right-radius: 0.10rem!important;
+}
