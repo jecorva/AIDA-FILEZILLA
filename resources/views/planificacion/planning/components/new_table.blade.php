@@ -64,6 +64,22 @@ $supervisores = Person::select(
     [data-field="ubicaciones"] .th-inner {
         width: 150px;
     }
+    [data-field="supervisores"] .th-inner {
+        width: 250px;
+    }
+    [data-field="implementos"] .th-inner {
+        width: 250px;
+    }
+    [data-field="maquinarias"] .th-inner {
+        width: 250px;
+    }
+    [data-field="operarios"] .th-inner {
+        width: 250px;
+    }
+
+    .select2 {
+        width: 100% !important;
+    }
 
 </style>
 
@@ -399,7 +415,7 @@ $supervisores = Person::select(
 
         value.supervisores.forEach( function(element) {
             let selected = value.sup_id == element.id ? 'selected' : '';
-            let oper = element.apel_pat + ' ' + element.apel_mat + ' - ' + element.nombres +' '+ value.sup_id+' - '+element.id
+            let oper = element.apel_pat + ' ' + element.apel_mat + ' - ' + element.nombres
             option += '<option value="'+  element.id +'" '+ selected +'>'+ oper.toUpperCase() +'</option>';
         });
         html = [

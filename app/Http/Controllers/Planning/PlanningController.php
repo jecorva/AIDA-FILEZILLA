@@ -669,6 +669,37 @@ class PlanningController extends Controller
     {
         $resp = array();
         try {
+            $listImplements = Implement::where('flag', 1)->get();
+            $listImplements = json_encode($listImplements);
+            $listImplements = json_decode($listImplements);
+
+            $dataOperators = Person::select(
+                'people.id',
+                'users.nombres',
+                'users.apel_pat',
+                'users.apel_mat'
+            )
+                ->join('person_types', 'person_types.id', '=', 'people.typeperson_id')
+                ->join('users', 'users.id', '=', 'people.user_id')
+                ->where('people.typeperson_id', '=', 1)
+                ->orWhere('people.typeperson_id', '=', 2)
+                ->get();
+            $dataOperators = json_encode($dataOperators);
+            $dataOperators = json_decode($dataOperators);
+                
+            $dataSupervisores = Person::select(
+                'people.id',
+                'users.nombres',
+                'users.apel_pat',
+                'users.apel_mat'
+            )
+                ->join('person_types', 'person_types.id', '=', 'people.typeperson_id')
+                ->join('users', 'users.id', '=', 'people.user_id')
+                ->where('people.typeperson_id', '=', 3)
+                ->get();
+            $dataSupervisores = json_encode($dataSupervisores);
+            $dataSupervisores = json_decode($dataSupervisores);
+
             $query = RequestDetailTask::select(
                 'request_detail_tasks.dia',
                 'request_detail_tasks.nro_maquinas',
@@ -716,17 +747,13 @@ class PlanningController extends Controller
                         'locations.id', 'locations.nombre'
                     )   ->join('locations', 'locations.id', '=', 'task_locations.location_id')
                         ->where('task_locations.requestdetailtask_id', $labor['requestdetailtask_id'])
-                        ->get();
-
-                    $d5 = array(
-                        'total' => count($locations),
-                        'locations' => $locations
-                    );
+                        ->get();                   
 
                     foreach( $locations as $loc ) {
                          $ubicaciones.= $loc['nombre'] .'<br> ';
-                         $ubicaciones_id[] = array($loc['id']);
-                    }
+                         $ubicaciones_id[] = $loc['id'];
+                    }                    
+
                     $d5 = array(
                         'nombres' => trim($ubicaciones, ', '),
                         'ids' => $ubicaciones_id
@@ -746,12 +773,12 @@ class PlanningController extends Controller
                             ->join('task_implements', 'task_implements.cat_implemento_id', '=', 'categoria_implementos.id')
                             ->where('task_implements.requestdetailtask_id', $labor['requestdetailtask_id'])
                             ->get();
+                        $implements = json_encode($implements);
+                        $implements = json_decode($implements);
                     }else {
-                        $implements = Implement::all();
+                        $implements = $listImplements;                        
                         $implement_select = $isCheck[0]->implement_id;
                     }
-
-
 
                     $taskImplements = TaskImplement::where('requestdetailtask_id',  $labor['requestdetailtask_id'])->count();
                     //// UBICACIONES E IMPLEMENTOS AL GUARDAR MODIFICA TODAS LAS TABLAS QUE RELACION AL TAREO.
@@ -786,6 +813,8 @@ class PlanningController extends Controller
                         ->join('task_machineries', 'task_machineries.cat_maquinaria_id', '=', 'categoria_maquinarias.id')
                         ->where('task_machineries.requestdetailtask_id', $labor['requestdetailtask_id'])
                         ->get();
+                    $maquinarias = json_encode($maquinarias);
+                    $maquinarias = json_decode($maquinarias);
 
                     $d7 = array(
                         'maquinarias' => $maquinarias,
@@ -797,17 +826,7 @@ class PlanningController extends Controller
 
                     if( $conta == 0 ) {
                         $conta++;
-                        $operators = Person::select(
-                            'people.id',
-                            'users.nombres',
-                            'users.apel_pat',
-                            'users.apel_mat'
-                        )
-                            ->join('person_types', 'person_types.id', '=', 'people.typeperson_id')
-                            ->join('users', 'users.id', '=', 'people.user_id')
-                            ->where('people.typeperson_id', '=', 1)
-                            ->orWhere('people.typeperson_id', '=', 2)
-                            ->get();
+                        $operators = $dataOperators;
                     }
 
                     $d8 = array(
@@ -836,16 +855,7 @@ class PlanningController extends Controller
 
                     if( $conta == 1 ){ 
                         $conta++;
-                        $supervisores = Person::select(
-                            'people.id',
-                            'users.nombres',
-                            'users.apel_pat',
-                            'users.apel_mat'
-                        )
-                            ->join('person_types', 'person_types.id', '=', 'people.typeperson_id')
-                            ->join('users', 'users.id', '=', 'people.user_id')
-                            ->where('people.typeperson_id', '=', 3)
-                            ->get();
+                        $supervisores = $dataSupervisores;
                     }
                     $sup_slt = TaskFiscal::where('requestdetailtask_id', $labor['requestdetailtask_id'] )->get();
                     if( count($sup_slt) > 0 ) $sup_id = $sup_slt[0]->person_id;
@@ -877,7 +887,6 @@ class PlanningController extends Controller
                     $nro++;
                 }
 
-
         } catch (Exception $e) {
 
         }
@@ -894,6 +903,37 @@ class PlanningController extends Controller
     public function list_supervisor($nro_semana, $anio, $person_id)
     {
         try {
+            $listImplements = Implement::where('flag', 1)->get();
+            $listImplements = json_encode($listImplements);
+            $listImplements = json_decode($listImplements);
+
+            $dataOperators = Person::select(
+                'people.id',
+                'users.nombres',
+                'users.apel_pat',
+                'users.apel_mat'
+            )
+                ->join('person_types', 'person_types.id', '=', 'people.typeperson_id')
+                ->join('users', 'users.id', '=', 'people.user_id')
+                ->where('people.typeperson_id', '=', 1)
+                ->orWhere('people.typeperson_id', '=', 2)
+                ->get();
+            $dataOperators = json_encode($dataOperators);
+            $dataOperators = json_decode($dataOperators);
+                
+            $dataSupervisores = Person::select(
+                'people.id',
+                'users.nombres',
+                'users.apel_pat',
+                'users.apel_mat'
+            )
+                ->join('person_types', 'person_types.id', '=', 'people.typeperson_id')
+                ->join('users', 'users.id', '=', 'people.user_id')
+                ->where('people.typeperson_id', '=', 3)
+                ->get();
+            $dataSupervisores = json_encode($dataSupervisores);
+            $dataSupervisores = json_decode($dataSupervisores);
+
             $query = RequestDetailTask::select(
                 'request_detail_tasks.dia',
                 'request_detail_tasks.nro_maquinas',
@@ -943,17 +983,13 @@ class PlanningController extends Controller
                         'locations.id', 'locations.nombre'
                     )   ->join('locations', 'locations.id', '=', 'task_locations.location_id')
                         ->where('task_locations.requestdetailtask_id', $labor['requestdetailtask_id'])
-                        ->get();
-
-                    $d5 = array(
-                        'total' => count($locations),
-                        'locations' => $locations
-                    );
+                        ->get();                   
 
                     foreach( $locations as $loc ) {
                          $ubicaciones.= $loc['nombre'] .'<br> ';
-                         $ubicaciones_id[] = array($loc['id']);
-                    }
+                         $ubicaciones_id[] = $loc['id'];
+                    }                    
+
                     $d5 = array(
                         'nombres' => trim($ubicaciones, ', '),
                         'ids' => $ubicaciones_id
@@ -973,13 +1009,16 @@ class PlanningController extends Controller
                             ->join('task_implements', 'task_implements.cat_implemento_id', '=', 'categoria_implementos.id')
                             ->where('task_implements.requestdetailtask_id', $labor['requestdetailtask_id'])
                             ->get();
+                        $implements = json_encode($implements);
+                        $implements = json_decode($implements);
                     }else {
-                        $implements = Implement::all();
+                        $implements = $listImplements;                        
                         $implement_select = $isCheck[0]->implement_id;
                     }
 
                     $taskImplements = TaskImplement::where('requestdetailtask_id',  $labor['requestdetailtask_id'])->count();
                     //// UBICACIONES E IMPLEMENTOS AL GUARDAR MODIFICA TODAS LAS TABLAS QUE RELACION AL TAREO.
+                    //if( $taskImplements == 0 ) $implement_select = 282;
 
                     $data = Tareo::select('tareos.implement_id', 'tareos.machinerie_id', 'tareos.operator_id')
                                 ->where('rdetailt_id', $labor['requestdetailtask_id'])
@@ -1010,6 +1049,8 @@ class PlanningController extends Controller
                         ->join('task_machineries', 'task_machineries.cat_maquinaria_id', '=', 'categoria_maquinarias.id')
                         ->where('task_machineries.requestdetailtask_id', $labor['requestdetailtask_id'])
                         ->get();
+                    $maquinarias = json_encode($maquinarias);
+                    $maquinarias = json_decode($maquinarias);
 
                     $d7 = array(
                         'maquinarias' => $maquinarias,
@@ -1021,17 +1062,7 @@ class PlanningController extends Controller
 
                     if( $conta == 0 ) {
                         $conta++;
-                        $operators = Person::select(
-                            'people.id',
-                            'users.nombres',
-                            'users.apel_pat',
-                            'users.apel_mat'
-                        )
-                            ->join('person_types', 'person_types.id', '=', 'people.typeperson_id')
-                            ->join('users', 'users.id', '=', 'people.user_id')
-                            ->where('people.typeperson_id', '=', 1)
-                            ->orWhere('people.typeperson_id', '=', 2)
-                            ->get();
+                        $operators = $dataOperators;
                     }
 
                     $d8 = array(
@@ -1060,16 +1091,7 @@ class PlanningController extends Controller
 
                     if( $conta == 1 ){ 
                         $conta++;
-                        $supervisores = Person::select(
-                            'people.id',
-                            'users.nombres',
-                            'users.apel_pat',
-                            'users.apel_mat'
-                        )
-                            ->join('person_types', 'person_types.id', '=', 'people.typeperson_id')
-                            ->join('users', 'users.id', '=', 'people.user_id')
-                            ->where('people.typeperson_id', '=', 3)
-                            ->get();
+                        $supervisores = $dataSupervisores;
                     }
                     $sup_slt = TaskFiscal::where('requestdetailtask_id', $labor['requestdetailtask_id'] )->get();
                     if( count($sup_slt) > 0 ) $sup_id = $sup_slt[0]->person_id;
@@ -1101,7 +1123,6 @@ class PlanningController extends Controller
                     $nro++;
                 }
 
-
         } catch (Exception $e) {
 
         }
@@ -1118,6 +1139,37 @@ class PlanningController extends Controller
     public function list_area($nro_semana, $anio, $area_id)
     {
         try {
+            $listImplements = Implement::where('flag', 1)->get();
+            $listImplements = json_encode($listImplements);
+            $listImplements = json_decode($listImplements);
+
+            $dataOperators = Person::select(
+                'people.id',
+                'users.nombres',
+                'users.apel_pat',
+                'users.apel_mat'
+            )
+                ->join('person_types', 'person_types.id', '=', 'people.typeperson_id')
+                ->join('users', 'users.id', '=', 'people.user_id')
+                ->where('people.typeperson_id', '=', 1)
+                ->orWhere('people.typeperson_id', '=', 2)
+                ->get();
+            $dataOperators = json_encode($dataOperators);
+            $dataOperators = json_decode($dataOperators);
+                
+            $dataSupervisores = Person::select(
+                'people.id',
+                'users.nombres',
+                'users.apel_pat',
+                'users.apel_mat'
+            )
+                ->join('person_types', 'person_types.id', '=', 'people.typeperson_id')
+                ->join('users', 'users.id', '=', 'people.user_id')
+                ->where('people.typeperson_id', '=', 3)
+                ->get();
+            $dataSupervisores = json_encode($dataSupervisores);
+            $dataSupervisores = json_decode($dataSupervisores);
+
             $query = RequestDetailTask::select(
                 'request_detail_tasks.dia',
                 'request_detail_tasks.nro_maquinas',
@@ -1167,17 +1219,13 @@ class PlanningController extends Controller
                         'locations.id', 'locations.nombre'
                     )   ->join('locations', 'locations.id', '=', 'task_locations.location_id')
                         ->where('task_locations.requestdetailtask_id', $labor['requestdetailtask_id'])
-                        ->get();
-
-                    $d5 = array(
-                        'total' => count($locations),
-                        'locations' => $locations
-                    );
+                        ->get();                   
 
                     foreach( $locations as $loc ) {
                          $ubicaciones.= $loc['nombre'] .'<br> ';
-                         $ubicaciones_id[] = array($loc['id']);
-                    }
+                         $ubicaciones_id[] = $loc['id'];
+                    }                    
+
                     $d5 = array(
                         'nombres' => trim($ubicaciones, ', '),
                         'ids' => $ubicaciones_id
@@ -1197,13 +1245,16 @@ class PlanningController extends Controller
                             ->join('task_implements', 'task_implements.cat_implemento_id', '=', 'categoria_implementos.id')
                             ->where('task_implements.requestdetailtask_id', $labor['requestdetailtask_id'])
                             ->get();
+                        $implements = json_encode($implements);
+                        $implements = json_decode($implements);
                     }else {
-                        $implements = Implement::all();
+                        $implements = $listImplements;                        
                         $implement_select = $isCheck[0]->implement_id;
                     }
 
                     $taskImplements = TaskImplement::where('requestdetailtask_id',  $labor['requestdetailtask_id'])->count();
                     //// UBICACIONES E IMPLEMENTOS AL GUARDAR MODIFICA TODAS LAS TABLAS QUE RELACION AL TAREO.
+                    //if( $taskImplements == 0 ) $implement_select = 282;
 
                     $data = Tareo::select('tareos.implement_id', 'tareos.machinerie_id', 'tareos.operator_id')
                                 ->where('rdetailt_id', $labor['requestdetailtask_id'])
@@ -1234,6 +1285,8 @@ class PlanningController extends Controller
                         ->join('task_machineries', 'task_machineries.cat_maquinaria_id', '=', 'categoria_maquinarias.id')
                         ->where('task_machineries.requestdetailtask_id', $labor['requestdetailtask_id'])
                         ->get();
+                    $maquinarias = json_encode($maquinarias);
+                    $maquinarias = json_decode($maquinarias);
 
                     $d7 = array(
                         'maquinarias' => $maquinarias,
@@ -1245,17 +1298,7 @@ class PlanningController extends Controller
 
                     if( $conta == 0 ) {
                         $conta++;
-                        $operators = Person::select(
-                            'people.id',
-                            'users.nombres',
-                            'users.apel_pat',
-                            'users.apel_mat'
-                        )
-                            ->join('person_types', 'person_types.id', '=', 'people.typeperson_id')
-                            ->join('users', 'users.id', '=', 'people.user_id')
-                            ->where('people.typeperson_id', '=', 1)
-                            ->orWhere('people.typeperson_id', '=', 2)
-                            ->get();
+                        $operators = $dataOperators;
                     }
 
                     $d8 = array(
@@ -1282,20 +1325,10 @@ class PlanningController extends Controller
                     $d11 = $labor['area'];
                     $d12 = $labor['subarea'];
 
-                    if( $conta == 1 ) {
+                    if( $conta == 1 ){ 
                         $conta++;
-                        $supervisores = Person::select(
-                            'people.id',
-                            'users.nombres',
-                            'users.apel_pat',
-                            'users.apel_mat'
-                        )
-                            ->join('person_types', 'person_types.id', '=', 'people.typeperson_id')
-                            ->join('users', 'users.id', '=', 'people.user_id')
-                            ->where('people.typeperson_id', '=', 3)
-                            ->get();
+                        $supervisores = $dataSupervisores;
                     }
-
                     $sup_slt = TaskFiscal::where('requestdetailtask_id', $labor['requestdetailtask_id'] )->get();
                     if( count($sup_slt) > 0 ) $sup_id = $sup_slt[0]->person_id;
                     else $sup_id = 0;
@@ -1343,6 +1376,37 @@ class PlanningController extends Controller
     public function list_subarea($nro_semana, $anio, $subarea_id)
     {
         try {
+            $listImplements = Implement::where('flag', 1)->get();
+            $listImplements = json_encode($listImplements);
+            $listImplements = json_decode($listImplements);
+
+            $dataOperators = Person::select(
+                'people.id',
+                'users.nombres',
+                'users.apel_pat',
+                'users.apel_mat'
+            )
+                ->join('person_types', 'person_types.id', '=', 'people.typeperson_id')
+                ->join('users', 'users.id', '=', 'people.user_id')
+                ->where('people.typeperson_id', '=', 1)
+                ->orWhere('people.typeperson_id', '=', 2)
+                ->get();
+            $dataOperators = json_encode($dataOperators);
+            $dataOperators = json_decode($dataOperators);
+                
+            $dataSupervisores = Person::select(
+                'people.id',
+                'users.nombres',
+                'users.apel_pat',
+                'users.apel_mat'
+            )
+                ->join('person_types', 'person_types.id', '=', 'people.typeperson_id')
+                ->join('users', 'users.id', '=', 'people.user_id')
+                ->where('people.typeperson_id', '=', 3)
+                ->get();
+            $dataSupervisores = json_encode($dataSupervisores);
+            $dataSupervisores = json_decode($dataSupervisores);
+            
             $query = RequestDetailTask::select(
                 'request_detail_tasks.dia',
                 'request_detail_tasks.nro_maquinas',
@@ -1392,17 +1456,13 @@ class PlanningController extends Controller
                         'locations.id', 'locations.nombre'
                     )   ->join('locations', 'locations.id', '=', 'task_locations.location_id')
                         ->where('task_locations.requestdetailtask_id', $labor['requestdetailtask_id'])
-                        ->get();
-
-                    $d5 = array(
-                        'total' => count($locations),
-                        'locations' => $locations
-                    );
+                        ->get();                   
 
                     foreach( $locations as $loc ) {
                          $ubicaciones.= $loc['nombre'] .'<br> ';
-                         $ubicaciones_id[] = array($loc['id']);
-                    }
+                         $ubicaciones_id[] = $loc['id'];
+                    }                    
+
                     $d5 = array(
                         'nombres' => trim($ubicaciones, ', '),
                         'ids' => $ubicaciones_id
@@ -1422,13 +1482,16 @@ class PlanningController extends Controller
                             ->join('task_implements', 'task_implements.cat_implemento_id', '=', 'categoria_implementos.id')
                             ->where('task_implements.requestdetailtask_id', $labor['requestdetailtask_id'])
                             ->get();
+                        $implements = json_encode($implements);
+                        $implements = json_decode($implements);
                     }else {
-                        $implements = Implement::all();
+                        $implements = $listImplements;                        
                         $implement_select = $isCheck[0]->implement_id;
                     }
 
                     $taskImplements = TaskImplement::where('requestdetailtask_id',  $labor['requestdetailtask_id'])->count();
                     //// UBICACIONES E IMPLEMENTOS AL GUARDAR MODIFICA TODAS LAS TABLAS QUE RELACION AL TAREO.
+                    //if( $taskImplements == 0 ) $implement_select = 282;
 
                     $data = Tareo::select('tareos.implement_id', 'tareos.machinerie_id', 'tareos.operator_id')
                                 ->where('rdetailt_id', $labor['requestdetailtask_id'])
@@ -1459,6 +1522,8 @@ class PlanningController extends Controller
                         ->join('task_machineries', 'task_machineries.cat_maquinaria_id', '=', 'categoria_maquinarias.id')
                         ->where('task_machineries.requestdetailtask_id', $labor['requestdetailtask_id'])
                         ->get();
+                    $maquinarias = json_encode($maquinarias);
+                    $maquinarias = json_decode($maquinarias);
 
                     $d7 = array(
                         'maquinarias' => $maquinarias,
@@ -1470,17 +1535,7 @@ class PlanningController extends Controller
 
                     if( $conta == 0 ) {
                         $conta++;
-                        $operators = Person::select(
-                            'people.id',
-                            'users.nombres',
-                            'users.apel_pat',
-                            'users.apel_mat'
-                        )
-                            ->join('person_types', 'person_types.id', '=', 'people.typeperson_id')
-                            ->join('users', 'users.id', '=', 'people.user_id')
-                            ->where('people.typeperson_id', '=', 1)
-                            ->orWhere('people.typeperson_id', '=', 2)
-                            ->get();
+                        $operators = $dataOperators;
                     }
 
                     $d8 = array(
@@ -1509,16 +1564,7 @@ class PlanningController extends Controller
 
                     if( $conta == 1 ){ 
                         $conta++;
-                        $supervisores = Person::select(
-                            'people.id',
-                            'users.nombres',
-                            'users.apel_pat',
-                            'users.apel_mat'
-                        )
-                            ->join('person_types', 'person_types.id', '=', 'people.typeperson_id')
-                            ->join('users', 'users.id', '=', 'people.user_id')
-                            ->where('people.typeperson_id', '=', 3)
-                            ->get();
+                        $supervisores = $dataSupervisores;
                     }
                     $sup_slt = TaskFiscal::where('requestdetailtask_id', $labor['requestdetailtask_id'] )->get();
                     if( count($sup_slt) > 0 ) $sup_id = $sup_slt[0]->person_id;
